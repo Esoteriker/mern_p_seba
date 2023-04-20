@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import decode from 'jwt-decode';
 
 import useStyles from "./styles";
 import memories from '../../images/memories.png';
@@ -22,11 +23,18 @@ const Navbar = () => {
         navigate('/');
 
         setUser(null);
+        //极端办法，不建议使用，强制刷新所有的状态
+        window.location.reload()
     };
 
     useEffect(() => {
-        // const token = user?.token;
+        const token = user?.token;
 
+        if (token) {
+            const decodedToken = decode(token);
+      
+            if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+          }
         // JWT
         setUser(JSON.parse(localStorage.getItem('profile')));
     }, [location]);

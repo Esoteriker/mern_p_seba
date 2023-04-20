@@ -21,13 +21,15 @@ export default makeStyles((theme) => ({
     marginTop: 3,
   },
   submit: {
-    marginBottom: 3,
-    marginTop: 3,
-    marginLeft: 2,
-    marginRight: 2,
+    marginBottom: 30,
+    marginTop: 30,
+    marginLeft: 20,
+    marginRight: 20,
+    width: '60%',
   },
   googleButton: {
-    marginTop: 3,
+    marginTop: 5,
     marginBottom: 2,
+    width: '60%',
   },
 }));
