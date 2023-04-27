@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import useStyles from './styles';
 import { createPost, updatePost} from "../../actions/posts";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 //Get the current id and set the current state
 
@@ -13,10 +14,11 @@ const Form = ({currentId, setCurrentId}) => {
 
     const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '', });
     
-    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
+    const post = useSelector((state) => currentId ? state.posts.posts.find((p) => p._id === currentId) : null);
     const classes = useStyles();
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (post) setPostData(post);
@@ -29,7 +31,7 @@ const Form = ({currentId, setCurrentId}) => {
             dispatch(updatePost(currentId, {...postData, name: user?.result?.name }));
             clear();
         } else {
-            dispatch(createPost( {...postData, name: user?.result?.name }));
+            dispatch(createPost( {...postData, name: user?.result?.name }, navigate));
             clear();
         }
     };
